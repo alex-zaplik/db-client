@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import main.model.Subject;
 import main.networking.Client;
 import main.scenes.LoginScene;
 
@@ -24,7 +25,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public List<String> getSubjects(boolean isLecturer) {
+    public List<Subject> getSubjects(boolean isLecturer) {
         if (client != null) {
             return client.getSubjects(isLecturer);
         }

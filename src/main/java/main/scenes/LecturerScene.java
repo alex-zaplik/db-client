@@ -11,5 +11,4 @@ class LecturerScene extends UserScene {
         view = new LecturerView();
         resetView();
     }
-
 }

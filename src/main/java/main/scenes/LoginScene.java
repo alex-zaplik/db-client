@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -17,6 +18,7 @@ public class LoginScene extends GridPane {
 
     private String student = "Student";
     private String lecturer = "Lecturer";
+    private String admin = "Admin";
 
     public LoginScene(Main main) {
         this.main = main;
@@ -50,7 +52,7 @@ public class LoginScene extends GridPane {
         add(tl, 0, 3);
 
         ChoiceBox<String> types = new ChoiceBox<>();
-        types.getItems().addAll(student, lecturer);
+        types.getItems().addAll(student, lecturer, admin);
         types.setValue(student);
         types.setMinWidth(150);
         add(types, 1, 3);
@@ -65,7 +67,16 @@ public class LoginScene extends GridPane {
             if (userTextField.getText().length() > 0 && pwBox.getText().length() > 0 &&
                     main.login(userTextField.getText(), pwBox.getText())) {
 
-                main.changeScene(types.getValue().equals(student) ? new StudentScene(main) : new LecturerScene(main));
+                Pane scene;
+
+                if (types.getValue().equals(lecturer))
+                    scene = new LecturerScene(main);
+                else if (types.getValue().equals(admin))
+                    scene = new AdminScene(main);
+                else
+                    scene = new StudentScene(main);
+
+                main.changeScene(scene);
             }
         });
     }
