@@ -11,4 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.json', name: 'json', version: '20171018'
+    compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
 }

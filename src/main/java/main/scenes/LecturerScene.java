@@ -1,14 +1,27 @@
 package main.scenes;
 
 import main.Main;
+import main.exceptions.AccessDeniedException;
+import main.model.Result;
+import main.model.Subject;
 import main.scenes.view.LecturerView;
+
+import java.util.List;
 
 class LecturerScene extends UserScene {
 
-    LecturerScene(Main main) {
+    LecturerScene(Main main) throws AccessDeniedException {
         super(main);
 
-        view = new LecturerView();
+        isLecturer = true;
+        createScene();
+
+        view = new LecturerView(main);
         resetView();
+    }
+
+    @Override
+    List<Result> getResults(Subject subject) throws AccessDeniedException {
+        return main.getResults(subject, true, false, null);
     }
 }

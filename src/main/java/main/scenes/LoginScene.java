@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Main;
+import main.exceptions.AccessDeniedException;
 
 public class LoginScene extends GridPane {
 
@@ -64,19 +65,39 @@ public class LoginScene extends GridPane {
         add(hbBtn, 1, 5);
 
         btn.setOnAction(event -> {
-            if (userTextField.getText().length() > 0 && pwBox.getText().length() > 0 &&
-                    main.login(userTextField.getText(), pwBox.getText())) {
+            String type;
+            if (types.getSelectionModel().getSelectedItem().equals(admin))
+                type = "admin";
+            else if (types.getSelectionModel().getSelectedItem().equals(lecturer))
+                type = "lecturer";
+            else
+                type = "student";
+
+            boolean loggedIn;
+            try {
+                loggedIn = main.login(userTextField.getText(), pwBox.getText(), type);
+            } catch (AccessDeniedException e) {
+                Main.displayMessage("Unable to log in", e.getMessage(), "Unable to log in. Please try again", Alert.AlertType.WARNING);
+                return;
+            }
+            if (userTextField.getText().length() > 0 && pwBox.getText().length() > 0 && loggedIn) {
 
                 Pane scene;
 
-                if (types.getValue().equals(lecturer))
-                    scene = new LecturerScene(main);
-                else if (types.getValue().equals(admin))
-                    scene = new AdminScene(main);
-                else
-                    scene = new StudentScene(main);
+                try {
+                    if (types.getValue().equals(lecturer))
+                        scene = new LecturerScene(main);
+                    else if (types.getValue().equals(admin))
+                        scene = new AdminScene(main);
+                    else
+                        scene = new StudentScene(main);
+                } catch (AccessDeniedException e) {
+                    return;
+                }
 
                 main.changeScene(scene);
+            } else {
+                Main.displayMessage("Error", "Unable to connect", "Make sure that all given data is correct and try again", Alert.AlertType.ERROR);
             }
         });
     }
