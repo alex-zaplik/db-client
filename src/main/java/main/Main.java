@@ -82,6 +82,10 @@ public class Main extends Application {
         client.newResults(results, groupID, isLecturer);
     }
 
+    public void doBackupRestore(String file, boolean isBackup) throws AccessDeniedException {
+        client.doBackupRestore(file, isBackup);
+    }
+
     public Stage getStage() {
         return stage;
     }

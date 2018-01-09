@@ -1,7 +1,5 @@
 package main.scenes;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -18,7 +16,10 @@ import main.model.Result;
 import main.model.Student;
 import main.model.Subject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SubmitScene extends GridPane {
@@ -102,8 +103,6 @@ public class SubmitScene extends GridPane {
 			} catch (AccessDeniedException e) {
 				Main.displayMessage("Error", e.getMessage(), "Make sure that the values you are trying to submit are correct", Alert.AlertType.ERROR);
 			}
-
-			// TODO: Close this window
 		});
 
 		HBox submitBox = new HBox();

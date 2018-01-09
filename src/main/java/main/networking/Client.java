@@ -340,6 +340,17 @@ public class Client {
         awaitConfirmation();
     }
 
+    public void doBackupRestore(String file, boolean isBackup) throws AccessDeniedException {
+        out.println(builder
+                .put("action", 7)
+                .put("file", file)
+                .put("backup", isBackup)
+                .get()
+        );
+
+        awaitConfirmation();
+    }
+
     private String hashPass(String pass) {
         return Hashing.sha256().hashString(pass, StandardCharsets.UTF_8).toString();
     }
